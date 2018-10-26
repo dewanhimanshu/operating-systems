@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 #define size 3
+int h = 0;
 class optimal
 {
     public:
@@ -25,6 +26,7 @@ class optimal
     {
         int max = -1;
         int n = -1;
+        h = 0;
         for(int i=0; i<size; i++)
         {
             int x = a[i];
@@ -32,8 +34,10 @@ class optimal
             {
                 if(x==ref[j])
                 {
+                     h++;
                     if(max<j)
                     {
+
                         max = j;
                         n = x;
 
@@ -41,6 +45,7 @@ class optimal
                 }
             }
         }
+
         return n;
     }
     void print()
@@ -94,7 +99,20 @@ class optimal
             {
                 int n =  least_used();
                 cout<<"\nValue of n"<<n;
-                if(n==-1)
+                cout<<"\nValue of h"<<h;
+               if(h == 1)
+                {
+                    for(int k=0; k<size; k++)
+                    {
+                        if(a[k]!=n)
+                        {
+                            a[k] = x;
+                            break;
+                        }
+                    }
+                    h = 0;
+                }
+               else  if(n==-1)
                 {
                     current = (current+1)%size;
                     a[current] = x;

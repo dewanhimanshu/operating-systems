@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 #define size 3
+int h = 0;
 class lru
 {
 public:
@@ -13,6 +14,7 @@ public:
     int a[size];
     int current = 0;
     int count = 0;
+
     void input()
     {
         cout<<"\nEnter the size of reference string";
@@ -41,13 +43,22 @@ public:
             cout<<"\t"<<a[i];
         }
     }
+    void print_lru()
+    {
+        cout<<"\n Lru array is";
+        for(int i=start;i<end;i++)
+        {
+            cout<<"\t"<<lru_array[i];
+        }
+    }
     void find()
     {
         for(int i=0; i<r; i++)
         {
             int x = ref[i];
             current_ref++;
-            lru_array[end++] = x;
+            lru_array[end] = x;
+            end++;
 
             int f = 1;
             for(int j=0; j<size; j++)
@@ -56,6 +67,17 @@ public:
                 {
                     cout<<"\nNo page fault occured";
                     f=0;
+                    for(int k=start;k<end;k++)
+                    {
+                        if(lru_array[k]==x)
+                        {
+                            lru_array[k] = -1;
+                        }
+                    }
+                    lru_array[end] = x;
+                    end++;
+
+
                 }
             }
             if(f)
@@ -71,6 +93,11 @@ public:
                 {
                     int c = lru_array[start];
                     start++;
+                    while(c==-1)
+                    {
+                        c = lru_array[start];
+                        start++;
+                    }
 
                     for(int k=0; k<size; k++)
                     {
